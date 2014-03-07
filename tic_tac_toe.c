@@ -1,5 +1,5 @@
 //
-//  main.c
+//  tic_tac_toe.c
 //  Tic Tac Toe
 //
 //  Created by Joseph Miller on 3/2/14.
