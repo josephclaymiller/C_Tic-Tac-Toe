@@ -10,12 +10,14 @@
 #define ROWS 3
 #define COLS 3
 #define BLANK '_'
+#define TRUE 0
+#define FALSE 1
 
 void start();
 void takeTurn(char mark, char board[ROWS][COLS]);
 void displayBoard(char board[ROWS][COLS]);
 char *getCoordinates();
-int placeMark(char mark, int x, int y, char board[ROWS][COLS]);
+int moveValid(char mark, int x, int y, char board[ROWS][COLS]);
 char winner(char board[ROWS][COLS]);
 char diagonalWinner(char board[ROWS][COLS]);
 char rowWinner(char board[ROWS][COLS]);
@@ -62,6 +64,7 @@ void start()
         currentPlayer++;
         currentPlayer %= numPlayers;
     } while (moves < maxMoves);
+    printf("It is a tie.");
 }
 
 void takeTurn(char mark, char board[ROWS][COLS])
@@ -69,14 +72,17 @@ void takeTurn(char mark, char board[ROWS][COLS])
     char *coords;
     int x, y;
     int validSpace;
+    
+    printf("Player %c's turn.\n", mark);
     coords = getCoordinates();
     x = coords[0];
     y = coords[1];
-    validSpace = placeMark(mark, x, y, board);
-    if (validSpace == 0) {
+    validSpace = moveValid(mark, x, y, board);
+    if (validSpace == TRUE) {
+        board[x][y] = mark;
         displayBoard(board);
     } else {
-        printf("Invalid move, try again\n");
+        printf("Invalid move, try again.\n");
         takeTurn(mark, board);
     }
 }
@@ -107,15 +113,18 @@ char *getCoordinates()
     return coordPointer;
 }
 
-int placeMark(char mark, int x, int y, char board[ROWS][COLS])
+int moveValid(char mark, int x, int y, char board[ROWS][COLS])
 {
-    char boardSpace = board[x][y];
-    if (boardSpace == BLANK) {
-        board[x][y] = mark;
-    } else {
-        return 1;
+    // check if space off board
+    if (x >= ROWS || y >= COLS || x < 0 || y < 0) {
+        return FALSE;
     }
-    return 0;
+    // check if board space is available
+    if (board[x][y] == BLANK) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
 
 char winner(char board[ROWS][COLS]) {
