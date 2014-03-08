@@ -34,7 +34,7 @@ int main(int argc, const char * argv[])
 
 void start()
 {
-    char board[ROWS][COLS] = { BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK };
+    static char board[ROWS][COLS] = { BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK };
     char player1 = 'x';
     char player2 = 'o';
     char players[2] = { player1, player2 };
