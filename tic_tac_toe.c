@@ -57,7 +57,7 @@ void start()
         winnerMark = winner(board);
         if (winnerMark != BLANK) {
             printf("%c won!\n", winnerMark);
-            break;
+            return;
         }
         
         // Switch players
@@ -102,7 +102,7 @@ void displayBoard(char board[ROWS][COLS])
 char *getCoordinates()
 {
     int x, y;
-    char coords[2];
+    static char coords[2];
     char *coordPointer;
     printf( "Please input coordinates: " );
     scanf( "%d", &x );
